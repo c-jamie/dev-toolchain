@@ -1,0 +1,23 @@
+"lightline
+set laststatus=2
+"nerdtree
+autocmd vimenter * NERDTree
+"plugins
+call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'junegunn/fzf'
+Plug 'vim-airline/vim-airline'
+Plug 'junegunn/fzf.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-surround'
+Plug 'flazz/vim-colorschemes'
+Plug '907th/vim-auto-save'
+call plug#end()
+"colors
+colorscheme molokai
+"line numbers
+:set number
+"autosaving
+let g:auto_save = 1

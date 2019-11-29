@@ -1,0 +1,60 @@
+# -*- sh -*-  Personal bash settings
+# Put this at the end of your .bashrc or .bash_profile file
+# # Source personal definitions
+# if [ -f ~/.bash_personal ]; then
+#         . ~/.bash_personal
+# fi
+
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# system specific settings
+export EDITOR=vim
+export TERM=screen-256color
+# alias
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ipy="ipython"
+
+alias ga='git add'
+alias gp='git push'
+alias gl='git log'
+alias gs='git status'
+alias gd='git diff'
+alias gm='git commit -m'
+alias gma='git commit -am'
+alias gb='git branch'
+alias gc='git checkout'
+alias gra='git remote add'
+alias grr='git remote rm'
+alias gpu='git pull'
+alias gcl='git clone'
+
+# default conda env
+function arrow() {
+    . /home/wesm/miniconda/etc/profile.d/conda.sh
+    conda activate arrow-3.7
+}
