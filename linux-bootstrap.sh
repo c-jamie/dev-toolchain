@@ -8,6 +8,7 @@ TOOLCHAIN_DIR=$HOME/dev-toolchain
 function build_user() {
 	adduser droairne
 	usermod -aG sudo droairne
+    su - droairne
 
 }
 
@@ -30,7 +31,7 @@ function install_apt_packages() {
 	    git \
         filezilla \
 	    tmux \
-        node \
+        nodejs \
         yarn
 }
 
@@ -49,6 +50,8 @@ function install_conda() {
     conda config --set show_channel_urls True
     conda config --add channels https://repo.continuum.io/pkgs/free
     conda config --add channels conda-forge
+
+    conda init --all --verbose
 }
 
 # Install conda environments
@@ -61,23 +64,27 @@ function create_conda_dev_environments() {
 
 # C++ toolchain
 function install_cpp_toolchain() {
-    conda install -yq  \
+    conda install -y \
 	  --file=$ARROW_DIR/ci/conda_env_cpp.yml \
-	  --file=$ARROW_DIR/ci/conda_env_gandiva.yml \
+	  --file=$ARROW_DIR/ci/conda_env_python.yml \
       -n a37 -c conda-forge
 
 }
 
-# vim
-function install_vim() {
-    cp TOOLCHAIN_DIR/dotfiles/vimrc ~/.vimrc
     mkdir -p ~/.vim/plugged
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-}
-
 function install_arrow() {
+    mkdir -p $CODE_DIR
     pushd $CODE_DIR
     git clone https://github.com/apache/arrow.git
+    git clone https://github.com/cill-airne/saighead-dev.git
+    popd
 }
 
-install_dotfiles()
+install_dotfiles
+install_apt_packages
+install_conda
+create_conda_dev_environments
+install_arrow
+install_cpp_toolchain
+install_vim
+exec bash
