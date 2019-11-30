@@ -81,7 +81,7 @@ function install_arrow() {
 }
 
 # vim setup
-function intall_vim() {
+function install_vim() {
     mkdir -p ~/.vim/plugged
     ln -sf $TOOLCHAIN_DIR/dotfiles/vimrc  ~/.vimrc
      ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
