@@ -71,7 +71,7 @@ function install_cpp_toolchain() {
 
 }
 
-    mkdir -p ~/.vim/plugged
+# arrow setup
 function install_arrow() {
     mkdir -p $CODE_DIR
     pushd $CODE_DIR
@@ -80,6 +80,13 @@ function install_arrow() {
     popd
 }
 
+# vim setup
+function intall_vim() {
+    mkdir -p ~/.vim/plugged
+    ln -sf $TOOLCHAIN_DIR/dotfiles/vimrc  ~/.vimrc
+     ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+}
 install_dotfiles
 install_apt_packages
 install_conda
