@@ -3,7 +3,7 @@
 CODE_DIR=$HOME/code
 ARROW_DIR=$CODE_DIR/arrow
 MINICONDA_DIR=$HOME/miniconda
-TOOLCHAIN_DIR=$HOME/dev-toolchain
+TOOLCHAIN_DIR=$CODE_DIR/dev-toolchain
 
 function build_user() {
 	adduser droairne
@@ -87,6 +87,12 @@ function install_vim() {
      ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 }
+
+function setup_tmux() {
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    ln -sf $TOOLCHAIN_DIR/dotfiles/tmux.conf  ~/.tmux.conf
+}
+
 install_dotfiles
 install_apt_packages
 install_conda
@@ -94,4 +100,5 @@ create_conda_dev_environments
 install_arrow
 install_cpp_toolchain
 install_vim
+setup_tmux
 exec bash
