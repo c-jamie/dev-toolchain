@@ -57,7 +57,7 @@ function install_conda() {
 # Install conda environments
 function create_conda_dev_environments() {
     conda create -yq -n a37 \
-          python=3.7
+          python=3.7 compilers clangxx
     conda create -yq -n p37 \
           python=3.7 pandas numpy ipython
 }
