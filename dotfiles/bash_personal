@@ -52,9 +52,3 @@ alias gra='git remote add'
 alias grr='git remote rm'
 alias gpu='git pull'
 alias gcl='git clone'
-
-# default conda env
-function arrow() {
-    . /home/wesm/miniconda/etc/profile.d/conda.sh
-    conda activate arrow-3.7
-}
