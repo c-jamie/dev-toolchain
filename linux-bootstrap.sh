@@ -28,11 +28,27 @@ function install_dotfiles() {
 # packages
 function install_apt_packages() {
     sudo apt install -y \
-	    git \
         filezilla \
 	    tmux \
-        nodejs \
-        yarn
+        clang-format
+}
+
+function install_docker() {
+    sudo apt-get install \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg-agent \
+        software-properties-common
+
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    
+    sudo add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
+       
+    sudo apt-get install docker-ce docker-ce-cli containerd.io
 }
 
 # Miniconda
@@ -101,4 +117,5 @@ install_arrow
 install_cpp_toolchain
 install_vim
 setup_tmux
+install_docker
 exec bash
