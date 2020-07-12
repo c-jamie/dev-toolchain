@@ -51,6 +51,15 @@ function install_docker() {
     sudo apt-get install docker-ce docker-ce-cli containerd.io
 }
 
+function install_docker_compose() {
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" \ 
+    -o /usr/local/bin/docker-compose
+
+    sudo chmod +x /usr/local/bin/docker-compose
+
+    sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+}
+
 # Miniconda
 function install_conda() {
     MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
@@ -75,7 +84,9 @@ function create_conda_dev_environments() {
     conda create -yq -n a37 \
           python=3.7 compilers clangxx
     conda create -yq -n p37 \
-          python=3.7 pandas numpy ipython
+          python=3.7 pandas numpy ipython nb_conda_kernels
+    conda create -yq -n jup \
+          python=3.7 jupyterlab nb_conda_kernels
 }
 
 # C++ toolchain
@@ -109,13 +120,21 @@ function setup_tmux() {
     ln -sf $TOOLCHAIN_DIR/dotfiles/tmux.conf  ~/.tmux.conf
 }
 
-install_dotfiles
-install_apt_packages
-install_conda
-create_conda_dev_environments
-install_arrow
-install_cpp_toolchain
-install_vim
-setup_tmux
-install_docker
+function install_git_scripts () {
+    mkdir -p ~/sc
+    ln -sf $TOOLCHAIN_DIR/scripts/rb_um.sh  ~/sc/rb_um.sh
+    ln -sf $TOOLCHAIN_DIR/scripts/rst_um.sh  ~/sc/rst_um.sh
+    ln -sf $TOOLCHAIN_DIR/scripts/build_arrow.sh  ~/sc/ba.sh
+}
+
+# install_dotfiles
+# install_apt_packages
+# install_conda
+# create_conda_dev_environments
+# install_arrow
+# install_cpp_toolchain
+# install_vim
+# setup_tmux
+# install_docker
+install_git_scripts
 exec bash
