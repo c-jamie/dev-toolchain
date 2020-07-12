@@ -125,6 +125,10 @@ function install_git_scripts () {
     ln -sf $TOOLCHAIN_DIR/scripts/rb_um.sh  ~/sc/rb_um.sh
     ln -sf $TOOLCHAIN_DIR/scripts/rst_um.sh  ~/sc/rst_um.sh
     ln -sf $TOOLCHAIN_DIR/scripts/build_arrow.sh  ~/sc/ba.sh
+    ln -sf $TOOLCHAIN_DIR/scripts/build_pa.sh  ~/sc/bpa.sh
+
+    git config --global user.name "c-jamie"
+    git config --global user.email "jamie.b.clery@gmail.com"
 }
 
 # install_dotfiles

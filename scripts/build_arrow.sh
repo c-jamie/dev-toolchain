@@ -34,3 +34,5 @@ else
     echo == BUILD MODE SINGLE ===
     make
 fi
+
+make install
