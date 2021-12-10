@@ -12,21 +12,19 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-export CONDA_HOME=~/miniconda
-eval "$($CONDA_HOME/bin/conda shell.bash hook)"
+# export CONDA_HOME=~/mambaforge
+# eval "$($CONDA_HOME/bin/conda shell.bash hook)"
 
 mkdir -p ~/code/arrow/cpp/build
 mkdir -p ~/code/arrow/cpp/build/dist
 pushd ~/code/arrow/cpp/build
 
-conda activate a37
-echo == USING PYTHON ==
-which python
-
 export ARROW_HOME=~/code/arrow/cpp/build/dist
 export LD_LIBRARY_PATH=$ARROW_HOME/lib:$LD_LIBRARY_PATH
 
 cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DARROW_BUILD_TESTS=ON -DARROW_COMPUTE=ON -DARROW_DATASET=ON  -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_INSTALL_PREFIX=$ARROW_HOME -DARROW_PYTHON=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DARROW_USE_ASAN=$ASAN -DARROW_USE_UBSAN=$UBSAN ..
+
+cp $CONDA_PREFIX/share/gnuconfig/config.* jemalloc_ep-prefix/src/jemalloc_ep/build-aux/
 
 if [ $FAST = 1 ]; then
     echo == BUILD MODE MULTI ==
