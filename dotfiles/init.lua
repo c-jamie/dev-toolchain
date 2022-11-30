@@ -541,15 +541,15 @@ end
 -- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
 require('mason-lspconfig').setup_handlers({
   default_handler,
-  ['tsserver'] = function()
-    lspconfig.tsserver.setup({
-      settings = {
-        completions = {
-          completeFunctionCalls = true
-        }
-      }
-    })
-  end,
+  -- ['tsserver'] = function()
+  --   lspconfig.tsserver.setup({
+  --     settings = {
+  --       completions = {
+  --         completeFunctionCalls = true
+  --       }
+  --     }
+  --   })
+  -- end,
   ['pylsp'] = function ()
     lspconfig.pylsp.setup({
       settings = {
