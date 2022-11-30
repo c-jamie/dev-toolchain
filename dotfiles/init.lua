@@ -549,7 +549,7 @@ require('mason-lspconfig').setup_handlers({
         }
       }
     })
-  end
+  end,
   ['pylsp'] = function ()
     lspconfig.pylsp.setup({
       settings = {
