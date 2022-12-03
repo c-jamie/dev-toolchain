@@ -52,6 +52,9 @@ vim.keymap.set("n", "<leader><S-Tab>", ":bprev<CR>", default_opts)
 vim.keymap.set("n", "<leader>Q", ":botright copen<CR>", default_opts)
 vim.keymap.set("n", "<leader>q", ":cclose<CR>", default_opts)
 
+--Split Nicely
+vim.keymap.set("n", "<leader><leader>l", ":FocusSplitNicely<CR>", default_opts)
+
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
@@ -109,6 +112,7 @@ require('packer').startup(function(use)
   use {'nvim-lualine/lualine.nvim'}
   use {'akinsho/bufferline.nvim'}
   use {'lukas-reineke/indent-blankline.nvim'}
+  use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
         
   -- Motion
   use {
