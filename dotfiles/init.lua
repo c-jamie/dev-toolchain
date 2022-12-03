@@ -42,7 +42,13 @@ vim.keymap.set('n', '<leader>w', '<cmd>write<cr>')
 vim.keymap.set('n', '<leader>bq', '<cmd>bdelete<cr>')
 vim.keymap.set('n', '<leader>bl', '<cmd>buffer #<cr>')
 
+-- Move buffers
+vim.keymap.set("n", "<leader><tab>", ":bnext<CR>")
+vim.keymap.set("n", "<leader><S-tab>", ":bprev<CR>")
 
+--Quikfix
+vim.keymap.set("n", "<leader>Q", ":botright copen<cr>")
+vim.keymap.set("n", "<leader>q", "close<cr>")
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
@@ -131,6 +137,16 @@ require('packer').startup(function(use)
   use {'nvim-lua/plenary.nvim'}
   use {'editorconfig/editorconfig-vim'}
   use {'akinsho/toggleterm.nvim'}
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 
   -- LSP support
   use {'neovim/nvim-lspconfig'}
@@ -167,6 +183,7 @@ end
 -- ========================================================================== --
 -- ==                         PLUGIN CONFIGURATION                         == --
 -- ========================================================================== --
+
 
 ---
 -- Colorscheme
