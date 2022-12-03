@@ -112,7 +112,7 @@ require('packer').startup(function(use)
   use {'nvim-lualine/lualine.nvim'}
   use {'akinsho/bufferline.nvim'}
   use {'lukas-reineke/indent-blankline.nvim'}
-  use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
+  use {'beauwilliams/focus.nvim', config = function() require("focus").setup() end }
         
   -- Motion
   use {
