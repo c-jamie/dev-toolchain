@@ -49,8 +49,8 @@ vim.keymap.set("n", "<leader><Tab>", ":bnext<CR>", default_opts)
 vim.keymap.set("n", "<leader><S-Tab>", ":bprev<CR>", default_opts)
 
 --Quikfix
-vim.keymap.set("n", "<leader>Q", ":botright copen<cr>", default_opts)
-vim.keymap.set("n", "<leader>q", "close<cr>", default_opts)
+vim.keymap.set("n", "<leader>Q", ":botright copen<CR>", default_opts)
+vim.keymap.set("n", "<leader>q", "close<CR>", default_opts)
 
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
