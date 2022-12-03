@@ -42,13 +42,16 @@ vim.keymap.set('n', '<leader>w', '<cmd>write<cr>')
 vim.keymap.set('n', '<leader>bq', '<cmd>bdelete<cr>')
 vim.keymap.set('n', '<leader>bl', '<cmd>buffer #<cr>')
 
+local default_opts = { noremap = true, silent = true }
+
 -- Move buffers
-vim.keymap.set("n", "<leader><tab>", ":bnext<CR>")
-vim.keymap.set("n", "<leader><S-tab>", ":bprev<CR>")
+vim.keymap.set("n", "<leader><Tab>", ":bnext<CR>", default_opts)
+vim.keymap.set("n", "<leader><S-Tab>", ":bprev<CR>", default_opts)
 
 --Quikfix
-vim.keymap.set("n", "<leader>Q", ":botright copen<cr>")
-vim.keymap.set("n", "<leader>q", "close<cr>")
+vim.keymap.set("n", "<leader>Q", ":botright copen<cr>", default_opts)
+vim.keymap.set("n", "<leader>q", "close<cr>", default_opts)
+
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
