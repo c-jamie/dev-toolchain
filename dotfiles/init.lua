@@ -500,13 +500,14 @@ require('mason').setup({
 require('mason-lspconfig').setup({
   ensure_installed = {
     'tsserver',
-    'eslint',
     'html',
     'cssls',
     'pylsp',
     'dockerls',
-    'bashls'
-  }
+    'bashls',
+    'clangd',
+  },
+  automatic_installation = true 
 })
 
 require('mason-tool-installer').setup {
@@ -520,7 +521,7 @@ require('mason-tool-installer').setup {
 
     -- you can turn off/on auto_update per tool
     -- { 'bash-language-server', auto_update = true },
-
+    'eslint',
     'flake8',
     'isort',
     'mypy',
@@ -645,15 +646,15 @@ end
 -- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
 require('mason-lspconfig').setup_handlers({
   default_handler,
-  -- ['tsserver'] = function()
-  --   lspconfig.tsserver.setup({
-  --     settings = {
-  --       completions = {
-  --         completeFunctionCalls = true
-  --       }
-  --     }
-  --   })
-  -- end,
+  ['tsserver'] = function()
+    lspconfig.tsserver.setup({
+      settings = {
+        completions = {
+          completeFunctionCalls = true
+        }
+      }
+    })
+  end,
   ['pylsp'] = function ()
     lspconfig.pylsp.setup({
       settings = {
@@ -673,6 +674,6 @@ require('mason-lspconfig').setup_handlers({
         }
       }
     })
-  end
+  end,
 })
 
