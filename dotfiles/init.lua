@@ -159,6 +159,7 @@ require('packer').startup(function(use)
   use {'neovim/nvim-lspconfig'}
   use {'williamboman/mason.nvim'}
   use {'williamboman/mason-lspconfig.nvim'}
+  use {'WhoIsSethDaniel/mason-tool-installer.nvim'}
 
   -- Autocomplete
   use {'hrsh7th/nvim-cmp'}
@@ -483,10 +484,50 @@ require('mason-lspconfig').setup({
     'eslint',
     'html',
     'cssls',
-    'pylsp'
+    'pylsp',
+    'dockerls',
+    'bashls'
   }
 })
 
+require('mason-tool-installer').setup {
+
+  -- a list of all tools you want to ensure are installed upon
+  -- start; they should be the names Mason uses for each tool
+  ensure_installed = {
+
+    -- you can pin a tool to a particular version
+    -- { 'golangci-lint', version = 'v1.47.0' },
+
+    -- you can turn off/on auto_update per tool
+    -- { 'bash-language-server', auto_update = true },
+
+    'flake8',
+    'isort',
+    'mypy',
+    'pylint',
+    'black',
+    'debugpy'
+  },
+
+  -- if set to true this will check each tool for updates. If updates
+  -- are available the tool will be updated. This setting does not
+  -- affect :MasonToolsUpdate or :MasonToolsInstall.
+  -- Default: false
+  auto_update = false,
+
+  -- automatically install / update on startup. If set to false nothing
+  -- will happen on startup. You can use :MasonToolsInstall or
+  -- :MasonToolsUpdate to install tools and check for updates.
+  -- Default: true
+  run_on_start = true,
+
+  -- set a delay (in ms) before the installation starts. This is only
+  -- effective if run_on_start is set to true.
+  -- e.g.: 5000 = 5 second delay, 10000 = 10 second delay, etc...
+  -- Default: 0
+  start_delay = 3000, -- 3 second delay
+}
 
 ---
 -- LSP config
@@ -598,11 +639,17 @@ require('mason-lspconfig').setup_handlers({
     lspconfig.pylsp.setup({
       settings = {
         pylsp = {
+          configurationSources = {"flake8"},
           plugins = {
-            pycodestyle = {
-              ignore = {'W391'},
-              maxLineLength = 100
-            }
+            flake8 = {
+              enabled = true,
+              ignore = {},
+              maxLineLength = 160
+            },
+            mypy = {enabled = true},
+            isort = {enabled = true},
+            pylint = {enabled = false},
+            pydocstyle = {enabled = false}
           }
         }
       }
