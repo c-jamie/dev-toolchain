@@ -164,6 +164,9 @@ require('packer').startup(function(use)
   use {'williamboman/mason.nvim'}
   use {'williamboman/mason-lspconfig.nvim'}
   use {'WhoIsSethDaniel/mason-tool-installer.nvim'}
+  use {'nvim-lua/plenary.nvim'}
+  -- Eslint 
+  use {'jose-elias-alvarez/null-ls.nvim'}
 
   -- Debug
   use {'mfussenegger/nvim-dap'}
@@ -679,3 +682,16 @@ require('mason-lspconfig').setup_handlers({
   end,
 })
 
+---
+-- eslint for js
+---
+
+local null_ls = require("null-ls")
+
+null_ls.setup({
+    sources = {
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.completion.spell,
+    },
+})
