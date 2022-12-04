@@ -38,9 +38,9 @@ vim.keymap.set({'n', 'x'}, 'cv', '"+p')
 vim.keymap.set({'n', 'x'}, 'x', '"_x')
 
 -- Commands
-vim.keymap.set('n', '<leader>w', '<cmd>write<cr>')
-vim.keymap.set('n', '<leader>bq', '<cmd>bdelete<cr>')
-vim.keymap.set('n', '<leader>bl', '<cmd>buffer #<cr>')
+vim.keymap.set('n', '<leader>w', '<cmd>write<CR>')
+vim.keymap.set('n', '<leader>bq', '<cmd>bdelete<CR>')
+vim.keymap.set('n', '<leader>bl', '<cmd>buffer #<CR>')
 
 local default_opts = { noremap = true, silent = true }
 
