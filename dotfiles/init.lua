@@ -161,6 +161,10 @@ require('packer').startup(function(use)
   use {'williamboman/mason-lspconfig.nvim'}
   use {'WhoIsSethDaniel/mason-tool-installer.nvim'}
 
+  -- Debug
+  use {'mfussenegger/nvim-dap'}
+  use {'rcarriga/nvim-dap-ui', requires = {'mfussenegger/nvim-dap'} }
+
   -- Autocomplete
   use {'hrsh7th/nvim-cmp'}
   use {'hrsh7th/cmp-buffer'}
