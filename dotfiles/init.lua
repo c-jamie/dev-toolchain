@@ -55,6 +55,10 @@ vim.keymap.set("n", "<leader>q", ":cclose<CR>", default_opts)
 --Split Nicely
 vim.keymap.set("n", "<leader><leader>l", ":FocusSplitNicely<CR>", default_opts)
 
+--Doge generate
+vim.keymap.set("n", "<leader><leader>d", ":DogeGenerate<CR>", default_opts)
+
+
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
@@ -176,6 +180,13 @@ require('packer').startup(function(use)
   use {'L3MON4D3/LuaSnip'}
   use {'rafamadriz/friendly-snippets'}
 
+  -- Docs
+  use {
+    'kkoomen/vim-doge',
+    run = ':call doge#install()'
+  }
+
+
   if install_plugins then
     require('packer').sync()
   end
@@ -196,6 +207,10 @@ end
 -- ==                         PLUGIN CONFIGURATION                         == --
 -- ========================================================================== --
 
+---
+-- doc strings
+---
+vim.g.doge_doc_standard_python = 'numpy'
 
 ---
 -- Colorscheme
@@ -652,8 +667,8 @@ require('mason-lspconfig').setup_handlers({
             },
             mypy = {enabled = true},
             isort = {enabled = true},
-            pylint = {enabled = false},
-            pydocstyle = {enabled = false}
+            pylint = {enabled = true},
+            pydocstyle = {enabled = true}
           }
         }
       }
