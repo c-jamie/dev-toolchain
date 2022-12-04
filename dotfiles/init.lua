@@ -709,11 +709,11 @@ null_ls.setup({
     null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.completion.spell,
 
-    null_ls.builtins.formatters.prettierd,
-    null_ls.builtins.formatters.black,
-    null_ls.builtins.formatters.isort,
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.black,
+    null_ls.builtins.formatting.isort,
 
-    null_ls.builtins.formatters.shfmt,
-    null_ls.builtins.formatters.fixjson,
+    null_ls.builtins.formatting.shfmt,
+    null_ls.builtins.formatting.fixjson,
   },
 })
