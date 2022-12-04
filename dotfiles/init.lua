@@ -529,7 +529,7 @@ require('mason-tool-installer').setup {
     'black',
     'debugpy',
     'prettierd',
-    'eslint_d'
+    'eslint_d',
   },
 
   -- if set to true this will check each tool for updates. If updates
