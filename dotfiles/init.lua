@@ -65,6 +65,9 @@ vim.keymap.set('n', '<F11>', require 'dap'.step_into, default_opts)
 vim.keymap.set('n', '<F12>', require 'dap'.step_out, default_opts)
 vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
 
+-- outline
+vim.keymap.set('n', '<leader>O', ':SymbolsOutline', default_opts)
+
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
@@ -164,6 +167,19 @@ require('packer').startup(function(use)
       }
     end
   }
+  use {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+  -- get outline of symbols
+  use {'simrat39/symbols-outline.nvim'}
 
   -- LSP support
   use {'neovim/nvim-lspconfig'}
@@ -216,10 +232,12 @@ end
 -- ==                         PLUGIN CONFIGURATION                         == --
 -- ========================================================================== --
 
+
 ---
 -- doc strings
 ---
 vim.g.doge_doc_standard_python = 'numpy'
+
 
 ---
 -- Colorscheme
@@ -257,6 +275,10 @@ require('lualine').setup({
   },
 })
 
+---
+--  symbols outline
+---
+require("symbols-outline").setup()
 
 ---
 -- bufferline
@@ -596,7 +618,7 @@ sign({name = 'DiagnosticSignInfo', text = ''})
 
 -- See :help vim.diagnostic.config()
 vim.diagnostic.config({
-  virtual_text = false,
+  virtual_text = true,
   severity_sort = true,
   float = {
     border = 'rounded',
