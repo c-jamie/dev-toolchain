@@ -183,16 +183,6 @@ require('packer').startup(function(use)
     end
   }
 
-  -- navigate the LSP via gr etc.
-  use({
-    "ray-x/navigator.lua",
-    requires = {
-      { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
-      { "neovim/nvim-lspconfig" },
-      { "nvim-treesitter/nvim-treesitter" },
-    },
-  })
-
   -- get outline of symbols
   use {'simrat39/symbols-outline.nvim'}
 
@@ -986,11 +976,3 @@ dap.configurations.typescriptreact = {
     webRoot = '${workspaceFolder}'
   }
 }
-
----
---  navigator
----
-
-require("navigator").setup({
-  mason = true,
-})
