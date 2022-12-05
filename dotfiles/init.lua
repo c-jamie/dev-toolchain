@@ -191,11 +191,6 @@ require('packer').startup(function(use)
       { "neovim/nvim-lspconfig" },
       { "nvim-treesitter/nvim-treesitter" },
     },
-    config = function()
-      require("navigator").setup({
-        mason = true,
-      })
-    end,
   })
 
   -- get outline of symbols
@@ -991,3 +986,11 @@ dap.configurations.typescriptreact = {
     webRoot = '${workspaceFolder}'
   }
 }
+
+---
+--  navigator
+---
+
+require("navigator").setup({
+  mason = true,
+})
