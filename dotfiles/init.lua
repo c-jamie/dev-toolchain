@@ -58,12 +58,6 @@ vim.keymap.set("n", "<leader><leader>l", ":FocusSplitNicely<CR>", default_opts)
 --Doge generate
 vim.keymap.set("n", "<leader><leader>d", ":DogeGenerate<CR>", default_opts)
 
---debug adapter
-vim.keymap.set('n', '<F5>', require 'dap'.continue, default_opts)
-vim.keymap.set('n', '<F10>', require 'dap'.step_over, default_opts)
-vim.keymap.set('n', '<F11>', require 'dap'.step_into, default_opts)
-vim.keymap.set('n', '<F12>', require 'dap'.step_out, default_opts)
-vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
 
 -- outline
 vim.keymap.set('n', '<leader>O', ':SymbolsOutline', default_opts)
@@ -843,6 +837,12 @@ dapui.setup({
 ---
 --  Adapters
 ---
+
+vim.keymap.set('n', '<F5>', require 'dap'.continue, default_opts)
+vim.keymap.set('n', '<F10>', require 'dap'.step_over, default_opts)
+vim.keymap.set('n', '<F11>', require 'dap'.step_into, default_opts)
+vim.keymap.set('n', '<F12>', require 'dap'.step_out, default_opts)
+vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
 
 -- python
 -- venv can be found vim.fn.stdpath "data" .. 'mason/packages/debugpy/venv/bin/python'
