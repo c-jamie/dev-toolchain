@@ -759,10 +759,10 @@ local dap = require('dap')
 
 -- python
 -- venv can be found vim.fn.stdpath "data" .. 'mason/packages/debugpy/venv/bin/python'
+-- mason already installs as an executable
 dap.adapters.python = {
   type = 'executable';
-  command = 'python';
-  args = { '-m', 'debugpy.adapter' };
+  command = 'debugpy';
 }
 
 -- node
