@@ -68,6 +68,10 @@ vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
 -- outline
 vim.keymap.set('n', '<leader>O', ':SymbolsOutline', default_opts)
 
+-- trouble
+vim.keymap.set('n', '<leader>tt', ':TroubleToggle', default_opts)
+vim.keymap.set('n', '<leader>ttcr', ':TroubleToggle quickfix', default_opts)
+
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
@@ -178,6 +182,22 @@ require('packer').startup(function(use)
       }
     end
   }
+
+  -- navigate the LSP via gr etc.
+  use({
+    "ray-x/navigator.lua",
+    requires = {
+      { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+      { "neovim/nvim-lspconfig" },
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+    config = function()
+      require("navigator").setup({
+        mason = true,
+      })
+    end,
+  })
+
   -- get outline of symbols
   use {'simrat39/symbols-outline.nvim'}
 
