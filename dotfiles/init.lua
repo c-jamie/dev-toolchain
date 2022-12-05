@@ -762,7 +762,7 @@ local dap = require('dap')
 -- mason already installs as an executable
 dap.adapters.python = {
   type = 'executable';
-  command = 'debugpy';
+  command = 'debugpy-adapter';
 }
 
 -- node
