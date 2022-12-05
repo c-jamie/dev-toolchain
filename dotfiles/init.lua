@@ -58,6 +58,12 @@ vim.keymap.set("n", "<leader><leader>l", ":FocusSplitNicely<CR>", default_opts)
 --Doge generate
 vim.keymap.set("n", "<leader><leader>d", ":DogeGenerate<CR>", default_opts)
 
+--debug adapter
+vim.keymap.set('n', '<F5>', require 'dap'.continue, default_opts)
+vim.keymap.set('n', '<F10>', require 'dap'.step_over, default_opts)
+vim.keymap.set('n', '<F11>', require 'dap'.step_into, default_opts)
+vim.keymap.set('n', '<F12>', require 'dap'.step_out, default_opts)
+vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
 
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
@@ -719,3 +725,140 @@ null_ls.setup({
     null_ls.builtins.formatting.fixjson,
   },
 })
+
+
+---
+-- debug adapter config
+---
+
+-- launch json via .vscode
+-- require('dap.ext.vscode').load_launchjs(nil, {})
+
+
+-- open automatically when a new session is created
+local dap, dapui = require("dap"), require("dapui")
+dap.listeners.after.event_initialized["dapui_config"]=function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"]=function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"]=function()
+  dapui.close()
+end
+
+-- make the UI nicer
+vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
+
+---
+--  Adapters
+---
+
+local dap = require('dap')
+
+-- python
+-- venv can be found vim.fn.stdpath "data" .. 'mason/packages/debugpy/venv/bin/python'
+dap.adapters.python = {
+  type = 'executable';
+  command = 'python';
+  args = { '-m', 'debugpy.adapter' };
+}
+
+-- node
+dap.adapters.node2 = {
+  type = 'executable';
+  command = 'node',
+  args = { vim.fn.stdpath "data" .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js' };
+}
+
+-- Chrome
+dap.adapters.chrome = {
+  type = 'executable',
+  command = 'node',
+  args = { vim.fn.stdpath "data" .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' };
+}
+
+---
+-- configurations
+---
+
+dap.configurations.python = {
+  {
+    -- The first three options are required by nvim-dap
+    type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
+    request = 'launch';
+    name = "Launch file";
+
+    -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+
+    program = "${file}"; -- This configuration will launch the current file if used.
+    pythonPath = function()
+      -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+      -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+      -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+      local cwd = vim.fn.getcwd()
+      local conda_python = os.getenv("CONDA_PREFIX") .. "/bin/python"
+      if vim.fn.executable(conda_python)
+        return conda_python
+      elseif vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
+        return cwd .. '/venv/bin/python'
+      elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
+        return cwd .. '/.venv/bin/python'
+      else
+        return '/usr/bin/python'
+      end
+    end;
+  },
+}
+
+dap.configurations.javascript = {
+  {
+    type = 'node2';
+    request = 'launch';
+    program = '${file}';
+    cwd = vim.fn.getcwd();
+    sourceMaps = true;
+    protocol = 'inspector';
+    console = 'integratedTerminal';
+  }
+}
+
+dap.configurations.javascript = {
+  {
+    type = 'chrome',
+    request = 'attach',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    port = 9222,
+    webRoot = '${workspaceFolder}'
+  }
+}
+
+dap.configurations.javascriptreact = {
+  {
+    type = 'chrome',
+    request = 'attach',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    port = 9222,
+    webRoot = '${workspaceFolder}'
+  }
+}
+
+dap.configurations.typescriptreact = {
+  {
+    type = 'chrome',
+    request = 'attach',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    port = 9222,
+    webRoot = '${workspaceFolder}'
+  }
+}
