@@ -310,7 +310,8 @@ require('nvim-treesitter.configs').setup({
     'lua',
     'css',
     'json',
-    'python'
+    'python',
+    'cpp'
   },
 })
 
