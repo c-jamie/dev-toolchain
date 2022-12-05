@@ -311,7 +311,7 @@ require('nvim-treesitter.configs').setup({
     'css',
     'json',
     'python',
-    'cpp'
+    'cpp',
   },
 })
 
