@@ -799,7 +799,7 @@ dap.configurations.python = {
       -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
       local cwd = vim.fn.getcwd()
       local conda_python = os.getenv("CONDA_PREFIX") .. "/bin/python"
-      if vim.fn.executable(conda_python) then
+      if vim.fn.executable(conda_python) ==1 then
         return conda_python
       elseif vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
         return cwd .. '/venv/bin/python'
