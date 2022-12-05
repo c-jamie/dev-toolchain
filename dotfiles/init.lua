@@ -542,6 +542,7 @@ require('mason-tool-installer').setup {
     'eslint_d',
     'shfmt',
     'fixjson',
+    'codelldb',
   },
 
   -- if set to true this will check each tool for updates. If updates
@@ -838,9 +839,36 @@ dap.adapters.chrome = {
   args = { vim.fn.stdpath "data" .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' };
 }
 
+-- C++/Rust
+dap.adapters.codelldb = {
+  type = 'server',
+  port = "${port}",
+  executable = {
+    -- CHANGE THIS to your path!
+    command = 'codelldb',
+    args = {"--port", "${port}"},
+
+    -- On windows you may have to uncomment this:
+    -- detached = false,
+  }
+}
+
 ---
 -- configurations
 ---
+
+dap.configurations.cpp = {
+  {
+    name = "Launch file",
+    type = "codelldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+  },
+}
 
 dap.configurations.python = {
   {
