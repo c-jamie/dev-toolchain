@@ -682,16 +682,6 @@ end
 -- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
 
 
-local conda_python = os.getenv("CONDA_PREFIX") .. "/bin/python"
-local conda_extra_paths = os.getenv("CONDA_PREFIX") .. "/lib/python3.10/site-packages"
-extra_paths = {}
-if vim.fn.executable(conda_python) == 1 then
-    extra_paths.insert(conda_extra_paths)
-end
-
-print("Extra paths:")
-print(extra_paths)
-
 require('mason-lspconfig').setup_handlers({
   default_handler,
   ['tsserver'] = function()
@@ -718,7 +708,7 @@ require('mason-lspconfig').setup_handlers({
             isort = {enabled = true},
             pylint = {enabled = true},
             pydocstyle = {enabled = true},
-            jedi = { extra_paths = extra_paths }
+            jedi = { extra_paths = { os.getenv("CONDA_PREFIX") .. "/lib/python3.10/site-packages" } }
           }
         }
       }
