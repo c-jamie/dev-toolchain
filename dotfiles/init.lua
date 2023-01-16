@@ -686,7 +686,7 @@ local conda_python = os.getenv("CONDA_PREFIX") .. "/bin/python"
 local conda_extra_paths = os.getenv("CONDA_PREFIX") .. "/lib/python3.10/site-packages"
 if vim.fn.executable(conda_python) == 1 then
     local extra_paths = {conda_extra_paths}
-else:
+else
     local extra_paths = {}
 end
 
