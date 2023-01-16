@@ -124,7 +124,7 @@ require('packer').startup(function(use)
   use {'akinsho/bufferline.nvim'}
   use {'lukas-reineke/indent-blankline.nvim'}
   use {'beauwilliams/focus.nvim', config = function() require("focus").setup() end }
-        
+
   -- Motion
   use {
       "ggandor/leap.nvim",
@@ -186,7 +186,7 @@ require('packer').startup(function(use)
   use {'williamboman/mason-lspconfig.nvim'}
   use {'WhoIsSethDaniel/mason-tool-installer.nvim'}
   use {'nvim-lua/plenary.nvim'}
-  -- Eslint 
+  -- Eslint
   use {'jose-elias-alvarez/null-ls.nvim'}
 
   -- Debug
@@ -539,7 +539,7 @@ require('mason-lspconfig').setup({
     'bashls',
     'clangd',
   },
-  automatic_installation = true 
+  automatic_installation = true
 })
 
 require('mason-tool-installer').setup {
@@ -680,6 +680,19 @@ end
 -- See :help mason-lspconfig-dynamic-server-setup
 -- all servers: https://github.com/neovim/nvim-lspconfig
 -- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
+
+
+local conda_python = os.getenv("CONDA_PREFIX") .. "/bin/python"
+local conda_extra_paths = [os.getenv("CONDA_PREFIX") .. "/lib/python3.10/site-packages"]
+if vim.fn.executable(conda_python) == 1 then
+    local extra_paths = conda_extra_paths
+else:
+    local extra_paths = []
+end
+
+print("Extra paths:")
+print(extra_paths)
+
 require('mason-lspconfig').setup_handlers({
   default_handler,
   ['tsserver'] = function()
@@ -705,7 +718,8 @@ require('mason-lspconfig').setup_handlers({
             mypy = {enabled = true},
             isort = {enabled = true},
             pylint = {enabled = true},
-            pydocstyle = {enabled = true}
+            pydocstyle = {enabled = true},
+            jedi = { extra_paths = extra_paths }
           }
         }
       }
