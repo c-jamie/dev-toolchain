@@ -564,7 +564,7 @@ require('mason-tool-installer').setup {
     'shfmt',
     'fixjson',
     'codelldb',
-    'pyright,
+    'pyright',
   },
 
   -- if set to true this will check each tool for updates. If updates
