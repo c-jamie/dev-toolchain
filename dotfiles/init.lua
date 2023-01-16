@@ -684,7 +684,7 @@ end
 
 local conda_python = os.getenv("CONDA_PREFIX") .. "/bin/python"
 local conda_extra_paths = os.getenv("CONDA_PREFIX") .. "/lib/python3.10/site-packages"
-local extra_paths = {}
+extra_paths = {}
 if vim.fn.executable(conda_python) == 1 then
     extra_paths.insert(conda_extra_paths)
 end
