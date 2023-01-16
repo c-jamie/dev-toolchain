@@ -534,7 +534,7 @@ require('mason-lspconfig').setup({
     'eslint',
     'html',
     'cssls',
-    'pylsp',
+    'pyright',
     'dockerls',
     'bashls',
     'clangd',
@@ -564,6 +564,7 @@ require('mason-tool-installer').setup {
     'shfmt',
     'fixjson',
     'codelldb',
+    'pyright,
   },
 
   -- if set to true this will check each tool for updates. If updates
@@ -681,6 +682,15 @@ end
 -- all servers: https://github.com/neovim/nvim-lspconfig
 -- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
 
+local python_root_files = {
+  'WORKSPACE', -- added for Bazel; items below are from default config
+  'pyproject.toml',
+  'setup.py',
+  'setup.cfg',
+  'requirements.txt',
+  'Pipfile',
+  'pyrightconfig.json',
+}
 
 require('mason-lspconfig').setup_handlers({
   default_handler,
@@ -693,25 +703,10 @@ require('mason-lspconfig').setup_handlers({
       }
     })
   end,
-  ['pylsp'] = function ()
-    lspconfig.pylsp.setup({
-      settings = {
-        pylsp = {
-          configurationSources = {"flake8"},
-          plugins = {
-            flake8 = {
-              enabled = true,
-              ignore = {},
-              maxLineLength = 160
-            },
-            mypy = {enabled = true},
-            isort = {enabled = true},
-            pylint = {enabled = true},
-            pydocstyle = {enabled = true},
-            jedi = { extra_paths = { os.getenv("CONDA_PREFIX") .. "/lib/python3.10/site-packages" } }
-          }
-        }
-      }
+  ['pyright'] = function ()
+    lspconfig.pyright.setup({
+        on_attach = on_attach,
+        root_dir = lspconfig.util.root_pattern(unpack(python_root_files))
     })
   end,
 })
