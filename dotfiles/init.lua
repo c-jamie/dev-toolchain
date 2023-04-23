@@ -538,6 +538,7 @@ require('mason-lspconfig').setup({
     'dockerls',
     'bashls',
     'clangd',
+    'ruff',
   },
   automatic_installation = true
 })
@@ -565,6 +566,7 @@ require('mason-tool-installer').setup {
     'fixjson',
     'codelldb',
     'pyright',
+    'ruff',
   },
 
   -- if set to true this will check each tool for updates. If updates
