@@ -538,6 +538,7 @@ require('mason-lspconfig').setup({
     'dockerls',
     'bashls',
     'clangd',
+    'ruff',
   },
   automatic_installation = true
 })
@@ -565,6 +566,7 @@ require('mason-tool-installer').setup {
     'fixjson',
     'codelldb',
     'pyright',
+    'ruff',
   },
 
   -- if set to true this will check each tool for updates. If updates
@@ -718,6 +720,7 @@ require('mason-lspconfig').setup_handlers({
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
+  debug = true,
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
@@ -753,7 +756,7 @@ null_ls.setup({
 ---
 
 -- launch json via .vscode
--- require('dap.ext.vscode').load_launchjs(nil, {})
+require('dap.ext.vscode').load_launchjs(nil, {})
 
 
 -- open automatically when a new session is created
