@@ -799,7 +799,7 @@ null_ls.setup({
 ---
 
 -- launch json via .vscode
-fix: configrequire('dap.ext.vscode').load_launchjs(nil, {})
+require('dap.ext.vscode').load_launchjs(nil, {})
 
 
 -- open automatically when a new session is created
