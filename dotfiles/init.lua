@@ -373,7 +373,7 @@ require('gitsigns').setup({
 ---
 -- nvim-window
 ---
-vim.keymap.set('n', '<leader>w', '<cmd>lua require('nvim-window').pick()<cr>')
+vim.keymap.set('n', '<leader>w', "<cmd>lua require('nvim-window').pick()<cr>")
 require('nvim-window').setup({
   -- The characters available for hinting windows.
   chars = {
