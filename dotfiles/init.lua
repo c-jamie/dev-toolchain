@@ -413,21 +413,39 @@ require('telescope').load_extension('fzf')
 ---
 -- nvim-tree (File explorer)
 ---
+
+local function my_on_attach(bufnr)
+  local api = require('nvim-tree.api')
+
+  local function opts(desc)
+    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  api.config.mappings.default_on_attach(bufnr)
+
+  vim.keymap.set('n', 'O', '', { buffer = bufnr })
+  vim.keymap.del('n', 'O', { buffer = bufnr })
+  vim.keymap.set('n', '<2-RightMouse>', '', { buffer = bufnr })
+  vim.keymap.del('n', '<2-RightMouse>', { buffer = bufnr })
+  vim.keymap.set('n', 'D', '', { buffer = bufnr })
+  vim.keymap.del('n', 'D', { buffer = bufnr })
+  vim.keymap.set('n', 'E', '', { buffer = bufnr })
+  vim.keymap.del('n', 'E', { buffer = bufnr })
+
+  vim.keymap.set('n', 'A', api.tree.expand_all, opts('Expand All'))
+  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+  vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
+  vim.keymap.set('n', 'P', function()
+    local node = api.tree.get_node_under_cursor()
+    print(node.absolute_path)
+  end, opts('Print Node Path'))
+
+  vim.keymap.set('n', 'Z', api.node.run.system, opts('Run System'))
+end
+
 -- See :help nvim-tree-setup
 require('nvim-tree').setup({
-  hijack_cursor = false,
-  on_attach = function(bufnr)
-    local bufmap = function(lhs, rhs, desc)
-      vim.keymap.set('n', lhs, rhs, {buffer = bufnr, desc = desc})
-    end
-
-    -- :help nvim-tree.api
-    local api = require('nvim-tree.api')
-
-    bufmap('L', api.node.open.edit, 'Expand folder or go to file')
-    bufmap('H', api.node.navigate.parent_close, 'Close parent folder')
-    bufmap('gh', api.tree.toggle_hidden_filter, 'Toggle hidden files')
-  end
+    on_attach=my_on_attach
 })
 
 vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
