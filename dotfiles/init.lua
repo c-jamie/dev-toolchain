@@ -58,7 +58,6 @@ vim.keymap.set("n", "<leader><leader>l", ":FocusSplitNicely<CR>", default_opts)
 --Doge generate
 vim.keymap.set("n", "<leader><leader>d", ":DogeGenerate<CR>", default_opts)
 
-
 -- outline
 vim.keymap.set('n', '<leader>O', ':SymbolsOutline', default_opts)
 
@@ -130,7 +129,10 @@ require('packer').startup(function(use)
       "ggandor/leap.nvim",
       config = function() require("leap").set_default_keymaps() end
   }
-
+  
+  -- Window
+  use {'yorickpeterse/nvim-window'}
+   
   -- File explorer
   use {'kyazdani42/nvim-tree.lua'}
 
