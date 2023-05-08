@@ -58,7 +58,6 @@ vim.keymap.set("n", "<leader><leader>l", ":FocusSplitNicely<CR>", default_opts)
 --Doge generate
 vim.keymap.set("n", "<leader><leader>d", ":DogeGenerate<CR>", default_opts)
 
-
 -- outline
 vim.keymap.set('n', '<leader>O', ':SymbolsOutline', default_opts)
 
@@ -133,6 +132,9 @@ require('packer').startup(function(use)
 
   -- File explorer
   use {'kyazdani42/nvim-tree.lua'}
+
+  -- Windows
+  use {'yorickpeterse/nvim-window'}
 
   -- Fuzzy finder
   use {'nvim-telescope/telescope.nvim'}
@@ -373,7 +375,7 @@ require('gitsigns').setup({
 ---
 -- nvim-window
 ---
-vim.keymap.set('n', '<leader>w', '<cmd>lua require('nvim-window').pick()<cr>')
+vim.keymap.set('n', '<leader>wi', '<cmd>lua require('nvim-window').pick()<cr>')
 require('nvim-window').setup({
   -- The characters available for hinting windows.
   chars = {
@@ -776,7 +778,7 @@ null_ls.setup({
 ---
 
 -- launch json via .vscode
-require('dap.ext.vscode').load_launchjs(nil, {})
+fix: configrequire('dap.ext.vscode').load_launchjs(nil, {})
 
 
 -- open automatically when a new session is created
