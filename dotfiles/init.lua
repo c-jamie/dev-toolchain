@@ -130,6 +130,9 @@ require('packer').startup(function(use)
       config = function() require("leap").set_default_keymaps() end
   }
 
+  -- Window
+  use {'yorickpeterse/nvim-window'}
+
   -- File explorer
   use {'kyazdani42/nvim-tree.lua'}
 
@@ -375,7 +378,7 @@ require('gitsigns').setup({
 ---
 -- nvim-window
 ---
-vim.keymap.set('n', '<leader>wi', '<cmd>lua require('nvim-window').pick()<cr>')
+vim.keymap.set('n', '<leader>w', "<cmd>lua require('nvim-window').pick()<cr>")
 require('nvim-window').setup({
   -- The characters available for hinting windows.
   chars = {
