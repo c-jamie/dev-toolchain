@@ -370,6 +370,29 @@ require('gitsigns').setup({
   }
 })
 
+---
+-- nvim-window
+---
+vim.keymap.set('n', '<leader>w', '<cmd>lua require('nvim-window').pick()<cr>')
+require('nvim-window').setup({
+  -- The characters available for hinting windows.
+  chars = {
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+    'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+  },
+
+  -- A group to use for overwriting the Normal highlight group in the floating
+  -- window. This can be used to change the background color.
+  normal_hl = 'Normal',
+
+  -- The highlight group to apply to the line that contains the hint characters.
+  -- This is used to make them stand out more.
+  hint_hl = 'Bold',
+
+  -- The border style to use for the floating window.
+  border = 'single'
+})
+
 
 ---
 -- Telescope
@@ -538,7 +561,6 @@ require('mason-lspconfig').setup({
     'dockerls',
     'bashls',
     'clangd',
-    'ruff',
   },
   automatic_installation = true
 })
@@ -566,7 +588,6 @@ require('mason-tool-installer').setup {
     'fixjson',
     'codelldb',
     'pyright',
-    'ruff',
   },
 
   -- if set to true this will check each tool for updates. If updates
@@ -720,7 +741,6 @@ require('mason-lspconfig').setup_handlers({
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
-  debug = true,
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
@@ -756,7 +776,7 @@ null_ls.setup({
 ---
 
 -- launch json via .vscode
-require('dap.ext.vscode').load_launchjs(nil, {})
+-- require('dap.ext.vscode').load_launchjs(nil, {})
 
 
 -- open automatically when a new session is created
