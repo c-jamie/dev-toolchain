@@ -65,6 +65,7 @@ vim.keymap.set('n', '<leader>O', ':SymbolsOutline', default_opts)
 vim.keymap.set('n', '<leader>tt', ':TroubleToggle', default_opts)
 vim.keymap.set('n', '<leader>ttcr', ':TroubleToggle quickfix', default_opts)
 
+
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
@@ -279,10 +280,12 @@ require('lualine').setup({
   },
 })
 
+
 ---
 --  symbols outline
 ---
 require("symbols-outline").setup()
+
 
 ---
 -- bufferline
@@ -458,11 +461,65 @@ vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
 -- toggleterm
 ---
 -- See :help toggleterm-roadmap
+
 require('toggleterm').setup({
-  open_mapping = '<C-g>',
-  direction = 'horizontal',
-  shade_terminals = true
+  size = 10,
+  open_mapping = [[<C-\>]],
+  hide_numbers = true,
+  shade_filetypes = {},
+  shade_terminals = true,
+  shading_factor = 2,
+  start_in_insert = true,
+  insert_mappings = true,
+  persist_size = true,
+  close_on_exit = true,
+  float_opts = {
+    border = "curved",
+    winblend = 0,
+    highlights = {
+      border = "Normal",
+      background = "Normal"
+    }
+  }
 })
+
+local Terminal = require('toggleterm.terminal').Terminal
+local node = Terminal:new({ cmd = 'node', hidden = true })
+local python = Terminal:new({ cmd = 'python', hidden = true })
+local lazygit = Terminal:new({
+  cmd = "lazygit",
+  dir = "git_dir",
+  direction = "float",
+  float_opts = {
+    border = "double",
+  },
+  -- function to run on opening the terminal
+  on_open = function(term)
+    vim.cmd("startinsert!")
+    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+  end,
+  -- function to run on closing the terminal
+  on_close = function(term)
+    vim.cmd("startinsert!")
+  end,
+})
+
+function RUN_NODE()
+  node:toggle()
+end
+
+function RUN_PYTHON()
+  python:toggle()
+end
+
+function RUN_LAZY()
+  lazygit:toggle()
+end
+
+vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua RUN_LAZY()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>tp", "<cmd>lua RUN_NODE()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>tn", "<cmd>lua RUN_PYTHON()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>te", "<C-\><C-n>", {noremap = true, silent = true})
 
 
 ---
@@ -584,6 +641,7 @@ require('mason-lspconfig').setup({
     'dockerls',
     'bashls',
     'clangd',
+    'ruff'
   },
   automatic_installation = true
 })
@@ -611,6 +669,7 @@ require('mason-tool-installer').setup {
     'fixjson',
     'codelldb',
     'pyright',
+    'ruff'
   },
 
   -- if set to true this will check each tool for updates. If updates
@@ -761,21 +820,25 @@ require('mason-lspconfig').setup_handlers({
 -- eslint for js + other formatters on save
 ---
 
+
+-- black
+vim.keymap.set('n', '<leader>fb', '<cmd>!black -q %<cr>')
+
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
   on_attach = function(client, bufnr)
-    if client.supports_method("textDocument/formatting") then
-      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = augroup,
-        buffer = bufnr,
-        callback = function()
-            -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-            vim.lsp.buf.format({bufnr = bufnr})
-        end,
-      })
-    end
+    -- if client.supports_method("textDocument/formatting") then
+    --   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    --   vim.api.nvim_create_autocmd("BufWritePre", {
+    --     group = augroup,
+    --     buffer = bufnr,
+    --     callback = function()
+    --         -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+    --         vim.lsp.buf.format({bufnr = bufnr})
+    --     end,
+    --   })
+    -- end
   end,
 
   diagnostics_format = "[#{c}] #{m} (#{s})",
