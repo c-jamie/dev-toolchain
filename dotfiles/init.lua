@@ -464,7 +464,6 @@ vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
 
 require('toggleterm').setup({
   size = 10,
-  open_mapping = [[<C-\>]],
   hide_numbers = true,
   shade_filetypes = {},
   shade_terminals = true,
@@ -484,6 +483,9 @@ require('toggleterm').setup({
 })
 
 local Terminal = require('toggleterm.terminal').Terminal
+local bash = Terminal:new({ cmd = 'bash && source ${HOME}/.bash_profile', hidden = true })
+local bashn = Terminal:new({ cmd = 'bash', hidden = true })
+local fish = Terminal:new({ cmd = 'fish', hidden = true })
 local node = Terminal:new({ cmd = 'node', hidden = true })
 local python = Terminal:new({ cmd = 'python', hidden = true })
 local lazygit = Terminal:new({
@@ -516,10 +518,24 @@ function RUN_LAZY()
   lazygit:toggle()
 end
 
+function RUN_BASH()
+  bash:toggle()
+end
+
+function RUN_BASHN()
+  bashn:toggle()
+end
+
+function RUN_FISH()
+  fish:toggle()
+end
+
 vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua RUN_LAZY()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>tp", "<cmd>lua RUN_NODE()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>tn", "<cmd>lua RUN_PYTHON()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>te", "<C-\><C-n>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>tn", "<cmd>lua RUN_NODE()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>tp", "<cmd>lua RUN_PYTHON()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>tb", "<cmd>lua RUN_BASH()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>tf", "<cmd>lua RUN_FISH()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>tbn", "<cmd>lua RUN_BASHN()<CR>", {noremap = true, silent = true})
 
 
 ---
@@ -641,7 +657,7 @@ require('mason-lspconfig').setup({
     'dockerls',
     'bashls',
     'clangd',
-    'ruff'
+    'ruff-lsp'
   },
   automatic_installation = true
 })
@@ -669,7 +685,7 @@ require('mason-tool-installer').setup {
     'fixjson',
     'codelldb',
     'pyright',
-    'ruff'
+    'ruff-lsp',
   },
 
   -- if set to true this will check each tool for updates. If updates
@@ -827,19 +843,19 @@ vim.keymap.set('n', '<leader>fb', '<cmd>!black -q %<cr>')
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
-  on_attach = function(client, bufnr)
-    -- if client.supports_method("textDocument/formatting") then
-    --   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    --   vim.api.nvim_create_autocmd("BufWritePre", {
-    --     group = augroup,
-    --     buffer = bufnr,
-    --     callback = function()
-    --         -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-    --         vim.lsp.buf.format({bufnr = bufnr})
-    --     end,
-    --   })
-    -- end
-  end,
+  -- on_attach = function(client, bufnr)
+  --   -- if client.supports_method("textDocument/formatting") then
+  --   --   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  --   --   vim.api.nvim_create_autocmd("BufWritePre", {
+  --   --     group = augroup,
+  --   --     buffer = bufnr,
+  --   --     callback = function()
+  --   --         -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+  --   --         vim.lsp.buf.format({bufnr = bufnr})
+  --   --     end,
+  --   --   })
+  --   -- end
+  -- end,
 
   diagnostics_format = "[#{c}] #{m} (#{s})",
 
@@ -862,7 +878,7 @@ null_ls.setup({
 ---
 
 -- launch json via .vscode
-fix: configrequire('dap.ext.vscode').load_launchjs(nil, {})
+require('dap.ext.vscode').load_launchjs(nil, {})
 
 
 -- open automatically when a new session is created
