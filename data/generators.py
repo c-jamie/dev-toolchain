@@ -1,14 +1,17 @@
-import numpy as numpy
-import pandas as pd
 import random
 import string
-from pyfaker import Fake
 from itertools import cycle
 from pathlib import Path
+
+import numpy as numpy
+import pandas as pd
+from pyfaker import Fake
+
 
 def categorical(prefix, num=15):
     values = ["{}_{}".format(prefix, n) for n in range(1, num)]
     return values
+
 
 def rstring(as_format, num=15, str_length=4):
     ticker_length = list(range(1, str_length))
