@@ -59,10 +59,10 @@ vim.keymap.set("n", "<leader><leader>l", ":FocusSplitNicely<CR>", default_opts)
 vim.keymap.set("n", "<leader><leader>d", ":DogeGenerate<CR>", default_opts)
 
 -- outline
-vim.keymap.set('n', '<leader>O', ':SymbolsOutline', default_opts)
+vim.keymap.set('n', '<leader>O', ':SymbolsOutline<CR>', default_opts)
 
 -- trouble
-vim.keymap.set('n', '<leader>tt', ':TroubleToggle', default_opts)
+vim.keymap.set('n', '<leader>tt', ':TroubleToggle<CR>', default_opts)
 vim.keymap.set('n', '<leader>ttcr', ':TroubleToggle quickfix', default_opts)
 
 
@@ -1724,6 +1724,7 @@ null_ls.setup({
 ---
 
 -- launch json via .vscode
+require('dap.ext.vscode').load_launchjs(nil, {})
 require('dap.ext.vscode').load_launchjs(nil, {})
 
 
