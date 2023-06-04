@@ -1,3 +1,4 @@
+
 -- taken from here https://github.com/VonHeikemen/nvim-starter/tree/04-lsp-installer
 
 -- ========================================================================== --
@@ -21,6 +22,9 @@ vim.opt.signcolumn = 'yes'
 -- delays and poor user experience.
 vim.opt.updatetime = 50
 
+-- --------
+-- KEY MAPS
+-- --------
 
 -- Space as leader key
 vim.g.mapleader = ' '
@@ -53,18 +57,49 @@ vim.keymap.set("n", "<leader>Q", ":botright copen<CR>", default_opts)
 vim.keymap.set("n", "<leader>q", ":cclose<CR>", default_opts)
 
 --Split Nicely
-vim.keymap.set("n", "<leader><leader>l", ":FocusSplitNicely<CR>", default_opts)
+vim.keymap.set("n", "<leader>fn", ":FocusSplitNicely<CR>", default_opts)
+vim.keymap.set("n", "<leader>f=", ":FocusSplitNicely<CR>", default_opts)
 
 --Doge generate
 vim.keymap.set("n", "<leader><leader>d", ":DogeGenerate<CR>", default_opts)
 
 -- outline
-vim.keymap.set('n', '<leader>O', ':SymbolsOutline', default_opts)
+vim.keymap.set('n', '<leader>O', ':SymbolsOutline<CR>', default_opts)
 
 -- trouble
-vim.keymap.set('n', '<leader>tt', ':TroubleToggle', default_opts)
-vim.keymap.set('n', '<leader>ttcr', ':TroubleToggle quickfix', default_opts)
+vim.keymap.set('n', '<leader>tt', ':TroubleToggle<CR>', default_opts)
+vim.keymap.set('n', '<leader>ttcr', ':TroubleToggle quickfix<CR>', default_opts)
 
+-- vim-bbye
+vim.keymap.set('n', '<leader>bc', '<cmd>Bdelete<CR>')
+
+-- diffview
+vim.keymap.set('n', '<leader>dv1', ":DiffviewOpen origin/main... --imply-local<cr>")
+vim.keymap.set('n', '<leader>dv2', ":DiffviewOpen origin/master... --imply-local<cr>")
+
+-- window pick
+vim.keymap.set('n', '<leader>w', "<cmd>lua require('nvim-window').pick()<cr>")
+
+-- telescope
+vim.keymap.set('n', '<leader>?', '<cmd>telescope oldfiles<cr>')
+vim.keymap.set('n', '<leader><space>', '<cmd>telescope buffers<cr>')
+vim.keymap.set('n', '<leader>ff', '<cmd>telescope find_files<cr>')
+vim.keymap.set('n', '<leader>fg', '<cmd>telescope live_grep<cr>')
+vim.keymap.set('n', '<leader>fd', '<cmd>telescope diagnostics<cr>')
+vim.keymap.set('n', '<leader>fs', '<cmd>telescope current_buffer_fuzzy_find<cr>')
+
+-- tree toggle
+vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
+
+-- format black
+vim.keymap.set('n', '<leader>fb', '<cmd>!black -q %<cr>')
+
+-- DAP
+vim.keymap.set('n', '<F5>', require 'dap'.continue, default_opts)
+vim.keymap.set('n', '<F10>', require 'dap'.step_over, default_opts)
+vim.keymap.set('n', '<F11>', require 'dap'.step_into, default_opts)
+vim.keymap.set('n', '<F12>', require 'dap'.step_out, default_opts)
+vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
 
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
@@ -91,7 +126,6 @@ vim.api.nvim_create_autocmd('FileType', {
   group = group,
   command = 'nnoremap <buffer> q <cmd>quit<cr>'
 })
-
 
 -- ========================================================================== --
 -- ==                               PLUGINS                                == --
@@ -233,30 +267,20 @@ if install_plugins then
   return
 end
 
-
 -- ========================================================================== --
 -- ==                         PLUGIN CONFIGURATION                         == --
 -- ========================================================================== --
-
 
 ---
 -- doc strings
 ---
 vim.g.doge_doc_standard_python = 'numpy'
 
-
 ---
 -- Colorscheme
 ---
 vim.opt.termguicolors = true
-vim.cmd('colorscheme tokyonight')
-
-
----
--- vim-bbye
----
-vim.keymap.set('n', '<leader>bc', '<cmd>Bdelete<CR>')
-
+vim.cmd('colorscheme tokyonight-night')
 
 ---
 -- lualine.nvim (statusline)
@@ -281,17 +305,16 @@ require('lualine').setup({
   },
 })
 
-
 ---
 --  symbols outline
 ---
 require("symbols-outline").setup()
 
-
 ---
 -- bufferline
 ---
 -- See :help bufferline-settings
+
 require('bufferline').setup({
   options = {
     mode = 'buffers',
@@ -311,11 +334,11 @@ require('bufferline').setup({
   }
 })
 
-
 ---
 -- Treesitter
 ---
 -- See :help nvim-treesitter-modules
+
 require('nvim-treesitter.configs').setup({
   highlight = {
     enable = true,
@@ -345,12 +368,11 @@ require('nvim-treesitter.configs').setup({
   },
 })
 
-
 ---
 -- Comment.nvim
 ---
-require('Comment').setup({})
 
+require('Comment').setup({})
 
 ---
 -- Indent-blankline
@@ -363,7 +385,6 @@ require('indent_blankline').setup({
   use_treesitter = true,
   show_current_context = false
 })
-
 
 ---
 -- Gitsigns
@@ -379,11 +400,9 @@ require('gitsigns').setup({
   }
 })
 
-
 ---
 -- Git Diffview
 ---
-
 
 local actions = require("diffview.actions")
 
@@ -396,8 +415,6 @@ vim.keymap.set('n', '<leader><leader>dv', function()
   end
 end)
 
-vim.keymap.set('n', '<leader><leader>dv1', ":DiffviewOpen origin/main... --imply-local<cr>")
-vim.keymap.set('n', '<leader><leader>dv2', ":DiffviewOpen origin/master... --imply-local<cr>")
 
 require("diffview").setup({
   diff_binaries = false,    -- Show diffs for binaries
@@ -614,13 +631,10 @@ require("diffview").setup({
   },
 })
 
-
 ---
 -- nvim-window
 ---
 
-
-vim.keymap.set('n', '<leader>w', "<cmd>lua require('nvim-window').pick()<cr>")
 require('nvim-window').setup({
   -- The characters available for hinting windows.
   chars = {
@@ -640,20 +654,12 @@ require('nvim-window').setup({
   border = 'single'
 })
 
-
 ---
 -- Telescope
 ---
 -- See :help telescope.builtin
-vim.keymap.set('n', '<leader>?', '<cmd>Telescope oldfiles<cr>')
-vim.keymap.set('n', '<leader><space>', '<cmd>Telescope buffers<cr>')
-vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
-vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
-vim.keymap.set('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>')
-vim.keymap.set('n', '<leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
 
 require('telescope').load_extension('fzf')
-
 
 ---
 -- nvim-tree (File explorer)
@@ -692,9 +698,6 @@ end
 require('nvim-tree').setup({
     on_attach=my_on_attach
 })
-
-vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
-
 
 ---
 -- toggleterm
@@ -776,17 +779,17 @@ vim.api.nvim_set_keymap("n", "<leader>tb", "<cmd>lua RUN_BASH()<CR>", {noremap =
 vim.api.nvim_set_keymap("n", "<leader>tf", "<cmd>lua RUN_FISH()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<leader>tbn", "<cmd>lua RUN_BASHN()<CR>", {noremap = true, silent = true})
 
-
 ---
 -- Luasnip (snippet engine)
 ---
 -- See :help luasnip-loaders
-require('luasnip.loaders.from_vscode').lazy_load()
 
+require('luasnip.loaders.from_vscode').lazy_load()
 
 ---
 -- nvim-cmp (autocomplete)
 ---
+
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 local cmp = require('cmp')
@@ -876,11 +879,11 @@ cmp.setup({
   },
 })
 
-
 ---
 -- Mason.nvim
 ---
 -- See :help mason-settings
+
 require('mason').setup({
   ui = {border = 'rounded'}
 })
@@ -950,6 +953,7 @@ require('mason-tool-installer').setup {
 -- LSP config
 ---
 -- See :help lspconfig-global-defaults
+
 local lspconfig = require('lspconfig')
 local lsp_defaults = lspconfig.util.default_config
 
@@ -1001,6 +1005,7 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
 ---
 -- LSP Keybindings
 ---
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = group,
   desc = 'LSP actions',
@@ -1029,10 +1034,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
-
 ---
 -- LSP servers
 ---
+
 local default_handler = function(server)
   -- See :help lspconfig-setup
   lspconfig[server].setup({})
@@ -1075,10 +1080,6 @@ require('mason-lspconfig').setup_handlers({
 -- eslint for js + other formatters on save
 ---
 
-
--- black
-vim.keymap.set('n', '<leader>fb', '<cmd>!black -q %<cr>')
-
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
@@ -1111,14 +1112,12 @@ null_ls.setup({
   },
 })
 
-
 ---
 -- debug adapter config
 ---
 
 -- launch json via .vscode
 require('dap.ext.vscode').load_launchjs(nil, {})
-
 
 -- open automatically when a new session is created
 local dap, dapui = require("dap"), require("dapui")
@@ -1199,12 +1198,6 @@ dapui.setup({
 ---
 --  Adapters
 ---
-
-vim.keymap.set('n', '<F5>', require 'dap'.continue, default_opts)
-vim.keymap.set('n', '<F10>', require 'dap'.step_over, default_opts)
-vim.keymap.set('n', '<F11>', require 'dap'.step_into, default_opts)
-vim.keymap.set('n', '<F12>', require 'dap'.step_out, default_opts)
-vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
 
 -- python
 -- venv can be found vim.fn.stdpath "data" .. 'mason/packages/debugpy/venv/bin/python'
