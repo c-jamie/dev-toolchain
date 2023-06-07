@@ -94,13 +94,6 @@ vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
 -- format black
 vim.keymap.set('n', '<leader>fb', '<cmd>!black -q %<cr>')
 
--- DAP
-vim.keymap.set('n', '<F5>', require 'dap'.continue, default_opts)
-vim.keymap.set('n', '<F10>', require 'dap'.step_over, default_opts)
-vim.keymap.set('n', '<F11>', require 'dap'.step_into, default_opts)
-vim.keymap.set('n', '<F12>', require 'dap'.step_out, default_opts)
-vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
-
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
@@ -1130,6 +1123,13 @@ end
 dap.listeners.before.event_exited["dapui_config"]=function()
   dapui.close()
 end
+
+-- DAP
+vim.keymap.set('n', '<F5>', require 'dap'.continue, default_opts)
+vim.keymap.set('n', '<F10>', require 'dap'.step_over, default_opts)
+vim.keymap.set('n', '<F11>', require 'dap'.step_into, default_opts)
+vim.keymap.set('n', '<F12>', require 'dap'.step_out, default_opts)
+vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint, default_opts)
 
 -- make the UI nicer
 vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
