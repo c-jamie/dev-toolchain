@@ -1,0 +1,38 @@
+// Place your key bindings in this file to override the defaults
+[
+  {
+    "key": "cmd+enter",
+    "command": "renameFile",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "enter",
+    "command": "-renameFile",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "enter",
+    "command": "list.select",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "ctrl+w l",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "ctrl+w p",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus"
+  }
+  {
+    "key": "ctrl+w n",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  }
+  {
+    "key": "ctrl+w k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminalFocus"
+  }
+]
